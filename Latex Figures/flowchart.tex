@@ -1,0 +1,50 @@
+% Define block styles
+\tikzset{
+block/.style={
+    rectangle,
+    draw,
+    text width=0.33\textwidth,
+    text centered,
+    rounded corners
+},
+cloud/.style={
+    draw,
+    ellipse,
+    minimum height=2em
+},
+descr/.style={
+    fill=white,
+    inner sep=2.5pt
+},
+connector/.style={
+    -latex,
+    font=\scriptsize
+},
+rectangle connector/.style={
+    connector,
+    to path={(\tikztostart) -- ++(#1,0pt) \tikztonodes |- (\tikztotarget) },
+    pos=0.5
+},
+rectangle connector/.default=-2cm,
+straight connector/.style={
+    connector,
+    to path=--(\tikztotarget) \tikztonodes
+}
+}
+
+\begin{tikzpicture}
+\matrix (m)[matrix of nodes, column  sep=2cm,row  sep=8mm, align=center, nodes={rectangle,draw, anchor=center} ]{
+    |[block]| {Seismic Amplitude} \\
+    |[block]| {Applied Structural Smoothing Filter} & |[block]| {Consistent Dip \\ Xline \& Inline} \\
+    |[block]| {Variance Attribute (Edge Detection)} & |[block]| {Curvature Attribute \\ Most Positive \& \\ Negative} \\
+    |[block]| {Ant-Tracking Attribute} \\
+};
+\path [>=latex,->] (m-1-1) edge (m-2-1);
+\path [>=latex,->] (m-2-1) edge (m-3-1);
+\path [>=latex,->] (m-3-1) edge (m-4-1);
+
+\path [>=latex,->] (m-2-1) edge (m-2-2);
+\path [>=latex,->] (m-2-2) edge (m-3-2);
+
+\end{tikzpicture}
+
